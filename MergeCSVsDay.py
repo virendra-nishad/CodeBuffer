@@ -60,7 +60,7 @@ class MergeCSVs:
     
         temp_df = pd.read_csv(file_path_list[0], index_col=False)
         cols = list(temp_df.columns)
-        cols_remove = ["FLowStartTimestamp", "SrcIP", "DstIP"]
+        cols_remove = ["FLowStartTimestamp", "SrcIP", "DstIP", "SrcPort", "DstPort"]
         col_names = [col for col in cols if col not in cols_remove]
         # mergeCSVs(dir_name, total_file_list, output_dir, col_names)
         # dir_name = self.getInputDir().split('/')[-1]
@@ -76,8 +76,8 @@ class MergeCSVs:
 
 if __name__ == "__main__":
 
-    in_path = "/home/viren/Thesis/2018OutputCSVLabel"
-    out_path = "/home/viren/Thesis/2018MergedLabeledCSVs"
+    in_path = "/home/viren/Thesis/MixedNormalAttack"
+    out_path = "/home/viren/Thesis/MixedNormalAttack"
 
     dir_list = []
     for _, dirs, _ in os.walk(in_path):
