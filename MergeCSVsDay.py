@@ -57,15 +57,14 @@ class MergeCSVs:
         file_list = self.getFileList(self.getInPath())
         for file_name in file_list:
             file_path_list.append(os.path.join(self.getInPath(), file_name))
-    
+        # print(file_list)
+
         temp_df = pd.read_csv(file_path_list[0], index_col=False)
         cols = list(temp_df.columns)
-        cols_remove = ["FLowStartTimestamp", "SrcIP", "DstIP", "SrcPort", "DstPort"]
-        col_names = [col for col in cols if col not in cols_remove]
-        # mergeCSVs(dir_name, total_file_list, output_dir, col_names)
-        # dir_name = self.getInputDir().split('/')[-1]
+        # cols_remove = ["FLowStartTimestamp", "SrcIP", "DstIP", "SrcPort", "DstPort"]
+        # col_names = [col for col in cols if col not in cols_remove]
         with open(os.path.join(self.getOutPath(), self.getOutFilename()), 'w') as write_obj:
-            csv_dict_writer = csv.DictWriter(write_obj, fieldnames=col_names, extrasaction="ignore")
+            csv_dict_writer = csv.DictWriter(write_obj, fieldnames=cols, extrasaction="ignore")
             csv_dict_writer.writeheader()
             for file_path in file_path_list:
                 with open(file_path, 'r') as read_obj:
@@ -76,20 +75,21 @@ class MergeCSVs:
 
 if __name__ == "__main__":
 
-    in_path = "/home/viren/Thesis/MixedNormalAttack"
-    out_path = "/home/viren/Thesis/MixedNormalAttack"
+    in_path = "/home/viren/Thesis/SeparatedNormalAttack"
+    out_path = "/home/viren/Thesis/singleCSV"
 
     dir_list = []
     for _, dirs, _ in os.walk(in_path):
         dir_list.extend(dirs)
     # walk through each folder present in in_path
     # Do below for each folder present in in_path, i.e merge csv based on folder
+
     for dir_name in dir_list:
 
         # below are the basic setup require before using MergeCSVs class
         merge_csv = MergeCSVs()
         merge_csv.setInPath(os.path.join(in_path, dir_name))
         merge_csv.setOutPath(out_path)
-        merge_csv.setOutFilename(dir_name + ".csv")
+        merge_csv.setOutFilename("single.csv")
 
         merge_csv.mergeCSVs()

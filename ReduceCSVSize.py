@@ -38,7 +38,7 @@ class ReduceCSVsize:
     def reduceCSVSize(self):
         df = pd.read_csv(os.path.join(self.getInPath(), self.getFilename()), dtype=dtype_map, index_col=False)
         # df = pd.read_csv(os.path.join(input_dir, csv_file), index_col=False)
-        drop_col = ["FLowStartTimestamp", "SrcIP", "DstIP"]
+        drop_col = ["FLowStartTimestamp", "SrcIP", "DstIP", "SrcPort", "DstPort"]
         df.drop(drop_col, axis = 1)
         df["Protocol"].replace({6: 0, 17: 1}, inplace=True)
         df["Protocol"] = df["Protocol"].astype('bool')
